@@ -4,20 +4,22 @@ echo '<pre>';
 for ($i=0; $i <= $gridRowCount; $i++) { 
 	if($i > 0)
 	{
-		echo $i . "\040\040";
+		//echo $i . "\040\040";
+		echo $i . "\t";
 	}
 	else{
-		echo "\040\040";
+		echo "\t";
 	}
 }
+
 echo PHP_EOL;
 for($row=0; $row < $gridRowCount; $row++)
 {
-	echo chr($row+65) . "\040";
+	echo chr($row+65) . "\t";
 	for($col=0; $col < $gridColCount; $col++)
 	{
-		echo "{$grid[$row][$col]} \040";
-		//echo $grid[$row][$col];
+
+		echo "{$grid[$row][$col]} \t";
 	}
 	echo PHP_EOL;
 }

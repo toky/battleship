@@ -1,9 +1,5 @@
 <?php
-session_start();
-
-// Set display erros
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//session_start();
 
 //Define const for host, directory separator and home directory
 define ('HOST',	'');
@@ -17,3 +13,10 @@ define ('GridCol', 10);
 // Degine ships size
 define ('BattleshipSize' , 5);
 define ('DestroyerSize' , 4);
+define ('Battleships', 1);
+define ('Destroyers', 2);
+
+define('IsClient', php_sapi_name() == 'cli');
+define('Debug', true);
+
+

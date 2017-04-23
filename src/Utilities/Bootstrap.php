@@ -38,14 +38,13 @@ class Bootstrap
     */
     protected function getController()
     {
-        // Set defaul controller
         $controller = "Web";
-        
-        if(php_sapi_name() == 'cli')// If client is console (cli)
+
+        if(IsClient)
         {
-            //Set Cli as controller
             $controller = "Cli";
         }
+        
         // Return controller name
         return $controller;
     }
@@ -102,6 +101,8 @@ class Bootstrap
         $instance = $class->newInstance();
 
         call_user_func(array($instance, $action)); 
+
+
     }
    
 }

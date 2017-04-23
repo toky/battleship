@@ -24,20 +24,24 @@ class GameFactory
 
 		// Create new instance of class Grid to create game grid, with game grid dimensions 10x10
 		$grid = new \App\Models\Grid([GridRow, GridRow]);
+		
+		for ($battleShip=0; $battleShip < Battleships; $battleShip++) { 
 
-		// Create new instance of class Battleship to create Battleship
-		$battleShip = new \App\Models\Ships\Battleship(BattleshipSize);
+			// Create new instance of class Battleship to create Battleship
+			$battleShipShip = new \App\Models\Ships\Battleship(BattleshipSize);
 
-		// Create new instance of class Battleship to create first Destroyer
-		//$firstDestroyer = new \App\Models\Ships\Destroyer(DestroyerSize);
+			// Add ships to grid
+			$grid->addShip($battleShipShip->getSize());
+		}
+		
+		for ($destroyer=0; $destroyer < Destroyers; $destroyer++) { 
+			
+			// Create new instance of class Destroyer to create Battleship
+			$destroyerShip = new \App\Models\Ships\Battleship(DestroyerSize);
 
-		// Create new instance of class Battleship to create second Destroyer
-		$secondDestroyer = new \App\Models\Ships\Destroyer(DestroyerSize);
-
-		// Add ships to grid
-		$grid->addShip($battleShip->getSize());
-		//$grid->addShip($firstDestroyer->getSize());
-		$grid->addShip($secondDestroyer->getSize());
+			// Add ships to grid
+			$grid->addShip($destroyerShip->getSize());
+		}
 
 		// Generate game grid
 		$gridState = $grid->getGrid();
@@ -68,19 +72,15 @@ class GameFactory
 			return [$shotMessage, $gridState, $grid->getFinalMessage()];
 	}
 
-	public static function showGame($client, $gridState, $gridRow, $gridCol, $shotMessage, $finalMessage)
+	public static function showGame($gridState, $gridRow, $gridCol, $shotMessage, $finalMessage)
 	{
-
-		if($client == "Web")
+		$decorator = new \App\Decorator\WebDecorator($gridState, $gridRow, $gridCol, $shotMessage, $finalMessage);
+		if(IsClient)
 		{
-
-			$decorator = new \App\Decorator\WebDecorator($gridState, $gridRow, $gridCol, $shotMessage, $finalMessage);
+			$decorator->cliDecorate();
+			return;
 		}
-		else
-		{
-			$decorator = new \App\Decorator\CliDecorator($gridState, $gridRow, $gridCol, $shotMessage, $finalMessage);
-		}
-
-		$decorator->decorate();
+		
+		$decorator->webDecorate();
 	}
 }
